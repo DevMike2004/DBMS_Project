@@ -1,5 +1,7 @@
 # DBMS_Project
-Project repository for DBMS semster project
+Database for ingredients and recipes that runs off of a webclient to allow users
+to scroll through their current ingredient list and find recipes that are inside to 
+database based on their current stock. 
 
 
 
