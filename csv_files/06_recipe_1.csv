@@ -1,0 +1,41 @@
+id,title,description,servings,prep_minutes,cook_minutes,instructions,created_at
+1,Fluffy Pancakes,Classic weekend pancakes.,4,10,15,"1. Whisk the dry ingredients. 2. Whisk milk, egg, vanilla and melted butter. 3. Combine and cook 1/4 cup at a time on a hot griddle.",2026-07-17 16:28:00
+2,Scrambled Eggs,Soft and creamy.,2,2,5,"1. Whisk eggs, milk, salt and pepper. 2. Cook in butter over low heat, stirring gently.",2026-07-19 13:45:00
+3,French Toast,Cinnamon-vanilla French toast.,4,5,15,"1. Whisk eggs, milk, sugar, cinnamon and vanilla. 2. Dip bread slices. 3. Cook in butter until golden.",2026-07-21 16:15:00
+4,Veggie Omelette,"Loaded with peppers, spinach and mushrooms.",1,5,8,"1. Saute pepper, mushrooms and spinach in butter. 2. Add beaten eggs and cook until set. 3. Add cheddar and fold.",2026-07-23 16:21:00
+5,Banana Oatmeal,Warm oats with banana and honey.,2,2,8,1. Simmer oats in milk with salt and cinnamon. 2. Stir in sliced banana. 3. Drizzle with honey.,2026-07-25 17:57:00
+6,Spaghetti Marinara,Simple tomato-garlic pasta.,4,10,25,1. Boil spaghetti. 2. Saute onion and garlic in oil; add tomatoes and oregano and simmer 15 min. 3. Toss with pasta and parmesan.,2026-07-27 20:05:00
+7,Spaghetti Carbonara,"Eggs, bacon and parmesan.",4,10,20,"1. Cook bacon until crisp. 2. Boil spaghetti. 3. Off the heat, toss pasta with bacon, beaten eggs, parmesan and pepper.",2026-07-29 14:09:00
+8,Chicken Fried Rice,Good use for leftover rice.,4,15,15,"1. Cook rice (day-old is best). 2. Brown diced chicken; set aside. 3. Stir-fry onion, garlic and peas; add rice, eggs, chicken, soy sauce and sesame oil.",2026-07-31 15:24:00
+9,Grilled Cheese,The 10-minute classic.,1,2,8,1. Butter the bread. 2. Put cheddar between the slices. 3. Cook in a pan until golden on both sides.,2026-08-02 14:45:00
+10,Roasted Broccoli,Crispy garlic-parmesan broccoli.,3,5,20,"1. Toss broccoli with oil, garlic and salt. 2. Roast at 425F for 20 min. 3. Top with parmesan.",2026-08-04 15:04:00
+11,Chicken Stir-Fry,Chicken and vegetables in a savory sauce.,4,15,12,"1. Cook rice. 2. Stir-fry chicken; set aside. 3. Stir-fry vegetables, garlic and ginger. 4. Add chicken and a sauce of soy, oyster sauce and cornstarch.",2026-08-06 18:26:00
+12,Beef Tacos,Weeknight ground beef tacos.,4,10,15,"1. Brown beef with spices. 2. Warm tortillas. 3. Fill with beef, cheese, tomato, lettuce, sour cream and salsa.",2026-08-08 17:34:00
+13,Chicken Quesadillas,Cheesy and crispy.,4,10,15,"1. Cook diced chicken with pepper, onion and cumin. 2. Fill tortillas with chicken and cheese. 3. Cook until crisp; serve with salsa and sour cream.",2026-08-10 19:26:00
+14,Black Bean Soup,Hearty and smoky.,6,10,30,"1. Saute onion, carrot, celery and garlic. 2. Add beans, broth and spices; simmer 25 min. 3. Blend partly and finish with lime.",2026-08-12 12:13:00
+15,Chicken Noodle Soup,The sick-day classic.,6,15,30,"1. Saute onion, carrot and celery in butter. 2. Add broth, chicken and bay leaves; simmer 20 min. 3. Shred chicken and add noodles until tender.",2026-08-14 18:24:00
+16,Tomato Soup,Creamy and pairs with grilled cheese.,4,10,30,"1. Saute onion and garlic in butter. 2. Add tomatoes, broth and sugar; simmer 20 min. 3. Blend and stir in cream.",2026-08-16 21:44:00
+17,Classic Beef Chili,"Thick, slow-simmered chili.",6,15,60,"1. Brown beef with onion, pepper and garlic. 2. Stir in spices and tomato paste. 3. Add beans and tomatoes; simmer 45 min.",2026-08-18 12:54:00
+18,Mac and Cheese,Stovetop cheddar mac.,6,10,20,"1. Boil macaroni. 2. Make a roux with butter and flour; whisk in milk. 3. Melt in cheddar, mustard and paprika; stir in pasta.",2026-08-20 21:24:00
+19,Garlic Butter Shrimp Pasta,Fast and garlicky.,4,10,15,"1. Boil spaghetti. 2. Saute shrimp in oil and butter with garlic and pepper flakes. 3. Toss with pasta, lemon and parmesan.",2026-08-22 19:00:00
+20,Baked Salmon with Lemon,Dijon-garlic salmon.,4,5,15,"1. Mix oil, garlic, dijon and lemon juice. 2. Brush over salmon and season. 3. Bake at 400F for 12-15 min.",2026-08-24 17:19:00
+21,Caesar Salad,Crisp romaine and croutons.,4,15,0,"1. Chop romaine. 2. Toss with dressing and a squeeze of lemon. 3. Top with croutons, parmesan and pepper.",2026-08-26 18:54:00
+22,Greek Salad,"No lettuce, all crunch.",4,15,0,"1. Chop cucumber, tomato and red onion. 2. Add olives and feta. 3. Dress with oil, vinegar, oregano and salt.",2026-08-28 18:34:00
+23,Guacamole,Chunky and fresh.,4,10,0,"1. Mash avocados with lime juice and salt. 2. Fold in onion, jalapeno, tomato and cilantro.",2026-08-30 20:51:00
+24,Mashed Potatoes,Rich and fluffy.,6,10,25,"1. Boil peeled potatoes with garlic until tender. 2. Drain and mash with butter, milk and sour cream. 3. Season.",2026-09-01 21:57:00
+25,Roasted Sweet Potatoes,"Sweet, smoky and caramelized.",4,10,30,"1. Cube sweet potatoes. 2. Toss with oil and spices. 3. Roast at 425F for 30 min, flipping once.",2026-09-03 15:31:00
+26,Chocolate Chip Cookies,"Chewy, makes about 24.",24,15,12,"1. Cream butter and sugars; beat in eggs and vanilla. 2. Mix in flour, baking soda and salt, then chips. 3. Bake at 375F for 10-12 min.",2026-09-05 15:17:00
+27,Banana Bread,Uses up overripe bananas.,10,15,60,"1. Mash bananas; mix with melted butter, sugar, eggs and vanilla. 2. Stir in dry ingredients and walnuts. 3. Bake at 350F for 60 min.",2026-09-07 18:31:00
+28,Fudgy Brownies,Dense and chocolatey.,16,15,25,"1. Melt butter; whisk in sugar, eggs and vanilla. 2. Stir in cocoa, flour, salt and baking powder, then chips. 3. Bake at 350F for 25 min.",2026-09-09 12:24:00
+29,Chickpea Curry,Creamy coconut curry.,4,10,25,"1. Cook rice. 2. Saute onion, garlic and ginger; add spices. 3. Add chickpeas, tomatoes and coconut milk; simmer 15 min. 4. Stir in spinach.",2026-09-11 17:42:00
+30,Beef and Broccoli,Better than takeout.,4,15,15,"1. Cook rice. 2. Sear sliced steak; set aside. 3. Steam-fry broccoli, garlic and ginger. 4. Add beef and a sauce of soy, oyster sauce, sugar and cornstarch.",2026-09-13 18:46:00
+31,Chicken Alfredo,Creamy parmesan fettuccine.,4,10,20,"1. Season and cook chicken; slice. 2. Boil fettuccine. 3. Simmer butter, garlic and cream; melt in parmesan. 4. Toss everything together.",2026-09-15 14:53:00
+32,Shakshuka,Eggs poached in spiced tomato sauce.,4,10,25,"1. Saute onion, pepper and garlic with spices. 2. Add tomatoes and simmer 10 min. 3. Crack in eggs, cover and cook until set. 4. Top with feta and cilantro.",2026-09-17 19:58:00
+33,BLT Sandwich,"Bacon, lettuce, tomato.",2,5,10,"1. Cook bacon until crisp. 2. Toast bread and spread with mayo. 3. Layer bacon, lettuce and tomato.",2026-09-19 14:39:00
+34,Tuna Salad Sandwich,Lunchbox staple.,2,10,0,"1. Mix tuna, mayo, celery, onion, dijon and lemon. 2. Season. 3. Spread on bread.",2026-09-21 20:01:00
+35,Hummus,"Smooth, lemony hummus.",6,10,0,"1. Blend chickpeas, tahini, lemon juice, garlic, cumin and salt. 2. Stream in oil until smooth. 3. Dust with paprika.",2026-09-23 18:37:00
+36,Lentil Soup,"Cheap, filling and freezes well.",6,15,40,"1. Saute onion, carrot, celery and garlic. 2. Add lentils, broth, tomatoes, cumin and bay leaf; simmer 35 min. 3. Stir in spinach.",2026-09-25 21:42:00
+37,Spaghetti and Meatballs,Sunday dinner favorite.,6,25,35,"1. Mix beef, breadcrumbs, egg, parmesan, garlic and seasoning; roll into balls. 2. Brown meatballs. 3. Simmer in tomato sauce with onion for 20 min. 4. Serve over spaghetti.",2026-09-27 12:05:00
+38,Honey Garlic Chicken,"Sticky, sweet and savory.",4,10,25,"1. Cook rice. 2. Sear chicken thighs until cooked through. 3. Add honey, soy sauce and garlic; reduce until sticky. 4. Top with green onion.",2026-09-29 18:08:00
+39,Overnight Oats,"Prep tonight, eat tomorrow.",1,5,0,"1. Stir oats, almond milk, yogurt, honey and cinnamon in a jar. 2. Refrigerate overnight. 3. Top with banana.",2026-10-01 19:11:00
+40,Apple Crisp,Warm fall dessert.,8,20,45,"1. Toss sliced apples with sugar, cinnamon and lemon. 2. Rub flour, oats, brown sugar, salt and butter into a crumble. 3. Top apples and bake at 350F for 45 min.",2026-10-03 12:16:00

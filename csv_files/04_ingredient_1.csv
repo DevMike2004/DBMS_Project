@@ -1,0 +1,108 @@
+id,name,category_id,base_unit,avg_price_per_unit
+1,All-purpose flour,1,g,0.0019
+2,Granulated sugar,1,g,0.0024
+3,Brown sugar,1,g,0.0035
+4,Baking powder,1,g,0.0190
+5,Baking soda,1,g,0.0076
+6,Vanilla extract,1,ml,0.1656
+7,Chocolate chips,1,g,0.0152
+8,Cocoa powder,1,g,0.0262
+9,Rolled oats,1,g,0.0037
+10,Honey,1,ml,0.0158
+11,Cornstarch,1,g,0.0060
+12,Butter,2,g,0.0112
+13,Egg,2,each,0.3166
+14,Whole milk,2,ml,0.0009
+15,Heavy cream,2,ml,0.0074
+16,Cheddar cheese,2,g,0.0144
+17,Parmesan,2,g,0.0292
+18,Mozzarella,2,g,0.0128
+19,Feta,2,g,0.0220
+20,Sour cream,2,g,0.0065
+21,Greek yogurt,2,g,0.0065
+22,Almond milk,2,ml,0.0012
+23,Garlic clove,3,each,0.0989
+24,Yellow onion,3,each,0.8855
+25,Red onion,3,each,0.9346
+26,Broccoli,3,g,0.0060
+27,Carrot,3,each,0.2749
+28,Celery stalk,3,each,0.1743
+29,Bell pepper,3,each,1.2191
+30,Tomato,3,each,0.6761
+31,Cherry tomatoes,3,g,0.0118
+32,Russet potato,3,g,0.0029
+33,Sweet potato,3,g,0.0036
+34,Spinach,3,g,0.0117
+35,Romaine lettuce,3,each,2.0000
+36,Cucumber,3,each,0.7735
+37,Avocado,3,each,1.2553
+38,Lemon,3,each,0.6379
+39,Lime,3,each,0.4176
+40,Banana,3,each,0.2299
+41,Apple,3,each,0.8566
+42,Jalapeno,3,each,0.2000
+43,Fresh cilantro,3,g,0.0300
+44,Fresh ginger,3,g,0.0134
+45,Green onion,3,each,0.1387
+46,Mushrooms,3,g,0.0100
+47,Zucchini,3,each,0.8794
+48,Chicken breast,5,g,0.0108
+49,Chicken thighs,5,g,0.0072
+50,Ground beef,5,g,0.0112
+51,Flank steak,5,g,0.0215
+52,Bacon slice,5,each,0.4494
+53,Shrimp,5,g,0.0254
+54,Salmon fillet,5,g,0.0280
+55,Salt,6,g,0.0009
+56,Black pepper,6,g,0.0406
+57,Cumin,6,g,0.0628
+58,Chili powder,6,g,0.0470
+59,Paprika,6,g,0.0495
+60,Dried oregano,6,g,0.0801
+61,Cinnamon,6,g,0.0557
+62,Red pepper flakes,6,g,0.0579
+63,Italian seasoning,6,g,0.0658
+64,Curry powder,6,g,0.0782
+65,Garlic powder,6,g,0.0457
+66,Bay leaf,6,each,0.0990
+67,Spaghetti,7,g,0.0039
+68,Elbow macaroni,7,g,0.0036
+69,Fettuccine,7,g,0.0043
+70,Egg noodles,7,g,0.0048
+71,White rice,7,g,0.0030
+72,Brown lentils,7,g,0.0045
+73,Sandwich bread slice,8,each,0.2109
+74,Flour tortilla,8,each,0.3346
+75,Corn tortilla,8,each,0.1092
+76,Breadcrumbs,8,g,0.0064
+77,Pita bread,8,each,0.5453
+78,Croutons,8,g,0.0150
+79,Soy sauce,9,ml,0.0078
+80,Mayonnaise,9,g,0.0083
+81,Dijon mustard,9,g,0.0109
+82,Salsa,9,g,0.0062
+83,Worcestershire sauce,9,ml,0.0157
+84,Hot sauce,9,ml,0.0186
+85,Oyster sauce,9,ml,0.0128
+86,Tahini,9,g,0.0215
+87,Caesar dressing,9,ml,0.0150
+88,Crushed tomatoes (can),11,g,0.0036
+89,Tomato paste,11,g,0.0083
+90,Black beans (can),11,g,0.0045
+91,Kidney beans (can),11,g,0.0045
+92,Chickpeas (can),11,g,0.0049
+93,Coconut milk (can),11,ml,0.0071
+94,Chicken broth,11,ml,0.0029
+95,Vegetable broth,11,ml,0.0030
+96,Canned tuna,11,g,0.0151
+97,Diced tomatoes (can),11,g,0.0035
+98,Olive oil,12,ml,0.0118
+99,Vegetable oil,12,ml,0.0052
+100,Sesame oil,12,ml,0.0242
+101,Red wine vinegar,12,ml,0.0089
+102,Frozen peas,10,g,0.0055
+103,Frozen mixed vegetables,10,g,0.0046
+104,Frozen corn,10,g,0.0048
+105,Peanut butter,4,g,0.0086
+106,Walnuts,4,g,0.0199
+107,Kalamata olives,4,g,0.0180
