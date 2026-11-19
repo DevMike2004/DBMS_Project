@@ -3,9 +3,8 @@ const sql = require("mysql2/promise")
 const config = {
     host: "localhost",
     user: "root",
-    password: "p@sswd", // !! CHANGE THIS TO YOUR ACTUAL PASSWORD !!
+    password: "p@sswd", 
     database: "library_db",
-    // Connection Pool settings are optional but good practice
     waitForConnections: true, 
     connectionLimit: 10,
     queueLimit: 0
