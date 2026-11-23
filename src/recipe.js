@@ -22,63 +22,8 @@ const router = express.Router();
 
 // Requires the exported pool object from the local 'mysql.js' file
 const pool = require('./mysql');
+const { makeTable, makePage, errorPage, isId } = require('./helpers');
 
-
-//*** Helpers for building the HTML tables sent back to the browser
-
-// SECURITY: escape text before putting it in HTML, so data containing
-// <script> or other tags is shown as plain text instead of running
-function escapeHtml(value) {
-    return String(value ?? '').replace(/[&<>"']/g, c =>       // regex operation to find certain characters
-        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));      // replace each with html entity code
-    // The characters will still be displayed but reads them as text not html
-    // Helps avoid things like entering <script> into the html web address
-}
-
-// Build a table from query results: column headings from fields, one row per result
-function makeTable(heading, result, fields) {
-    let html = `<H3>${escapeHtml(heading)}</H3>`;
-    html += "<TABLE BORDER=1 WIDTH=800>";
-
-    //*** print column headings
-    html += "<TR>";
-    for (let i = 0; i < fields.length; i++) {
-        html += `<TH style="color:Tomato">${escapeHtml(fields[i].name.toUpperCase())}</TH>`;
-    }
-    html += "</TR>";
-
-    //*** print rows of table data
-    for (let i = 0; i < result.length; i++) {
-        html += "<TR>";
-        for (let j = 0; j < fields.length; j++) {
-            html += `<TD style="vertical-align:top">${escapeHtml(result[i][fields[j].name])}</TD>`;
-        }
-        html += "</TR>";
-    }
-    if (result.length === 0) {
-        html += `<TR><TD colspan=${fields.length}>No results</TD></TR>`;
-    }
-
-    html += "</TABLE>";
-    return html;
-}
-
-// Wrap tables in a full page with a link back to the main menu
-function makePage(body) {
-    return "<HTML><STYLE>body{font-family:arial}</STYLE><BODY>"
-         + body
-         + "<BR><BR><BR><a href=/>Main Menu</a><BR><BR><BR>"
-         + "</BODY></HTML>";
-}
-
-function errorPage(res, status, message) {
-    res.status(status).send(makePage(`<H1>Error</H1><P>${escapeHtml(message)}</P>`));
-}
-
-// true if the value is a whole number greater than 0 (ids, servings)
-function isId(value) {
-    return Number.isInteger(Number(value)) && Number(value) > 0;
-}
 
 
 //*** Read and check the recipe fields sent by the browser (POST and PUT)
@@ -162,7 +107,7 @@ async function recipeTables(id) {
 
     return makeTable("Recipe", recipe, recipeFields)
          + makeTable("Ingredients", ingredients, ingFields)
-         + makeTable("Tags", tags, tagFiels);
+         + makeTable("Tags", tags, tagFields);
 }
 
 
