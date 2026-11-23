@@ -70,12 +70,12 @@ Build each page and connect it to the endpoints listed beside it.
 ## Backend B: Recipes, cooking, and reports
 
 **Recipes**
-- [.] `GET /api/tags`: list tags
-- [.] `GET /api/recipes`: list recipes with search and filters (tag, max cost, max time)
-- [.] `GET /api/recipes/:id`: one recipe with ingredients, tags and cost
-- [.] `POST /api/recipes`: create a recipe with its ingredients and tags (one transaction)
-- [.] `PUT /api/recipes/:id`: edit a recipe (one transaction)
-- [.] `DELETE /api/recipes/:id`: delete a recipe
+- [X] `GET /api/tags`: list tags
+- [X] `GET /api/recipes`: list recipes with search and filters (tag, max cost, max time)
+- [X] `GET /api/recipes/:id`: one recipe with ingredients, tags and cost
+- [X] `POST /api/recipes`: create a recipe with its ingredients and tags (one transaction)
+- [X] `PUT /api/recipes/:id`: edit a recipe (one transaction)
+- [X] `DELETE /api/recipes/:id`: delete a recipe
 
 **Finding recipes**
 - [ ] `GET /api/recipes/cookable`: recipes you can make right now
