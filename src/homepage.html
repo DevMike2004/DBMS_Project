@@ -1,11 +1,60 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background-color: #d3d3d3;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .finder-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            padding: 0 20px;
+        }
+
+        .nav-item {
+            padding: 12px 20px;
+            background-color: #ffffff;
+            color: #333;
+            text-decoration: none;
+            border: 1px solid #999;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .nav-item:hover {
+            background-color: #555;
+            color: #fff;
+        }
+
+        .nav-item.active {
+            background-color: #333;
+            color: #fff;
+            border-color: #333;
+        }
+    </style>
 </head>
 <body>
+    <h1>At-Home Recipe Finder</h1>
     <nav class="finder-nav">
         <a href="homepage.html" class="nav-item active">Home</a>
         <a href="pantry.html" class="nav-item">Pantry</a>
@@ -15,6 +64,5 @@
         <a href="shopping-list.html" class="nav-item">Shopping List</a>
         <a href="reports.html" class="nav-item">Reports</a>
     </nav>
-    <script src="helper.js"></script>
 </body>
 </html>

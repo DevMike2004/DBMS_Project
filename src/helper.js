@@ -43,9 +43,10 @@ function makeTable(heading, result, fields) {
 
 // Wrap tables in a full page with a link back to the main menu
 function makePage(body) {
-    return "<HTML><STYLE>body{font-family:arial}</STYLE><BODY>"
-         + body
-         + "<BR><BR><BR><a href=/>Main Menu</a><BR><BR><BR>"
+    return "<HTML><HEAD><link rel=\"stylesheet\" href=\"/css/styles.css\"></HEAD>"
+         + "<BODY class=\"site-page\">"
+         + "<div class=\"home-bar\"><a href=\"/\" class=\"home-button\">Home</a></div>"
+         + "<main class=\"page-content\">" + body + "</main>"
          + "</BODY></HTML>";
 }
 
