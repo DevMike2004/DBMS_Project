@@ -22,7 +22,7 @@ const router = express.Router();
 
 // Requires the exported pool object from the local 'mysql.js' file
 const pool = require('./mysql');
-const { makeTable, makePage, errorPage, isId } = require('./helpers');
+const { makeTable, makePage, errorPage, isId } = require('./helper');
 
 
 

@@ -4,7 +4,7 @@ const config = {
     host: "localhost",
     user: "root",
     password: "p@sswd", 
-    database: "library_db",
+    database: "kitchen",
     waitForConnections: true, 
     connectionLimit: 10,
     queueLimit: 0
