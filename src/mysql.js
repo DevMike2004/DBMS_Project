@@ -1,13 +1,15 @@
+//require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 const sql = require("mysql2/promise")
 
 const config = {
-    host: "localhost",
-    user: "root",
-    password: "p@sswd", 
-    database: "kitchen",
-    waitForConnections: true, 
+    host: process.env.DB_HOST || "localhost",
+    user: process.env.DB_USER || "root",
+    password: process.env.DB_PASSWORD || "p@sswd",
+    database: process.env.DB_NAME || "kitchen",
+    waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0
+    queueLimit: 0,
+    dateStrings: true // Return MySQL DATE values as YYYY-MM-DD strings
 }
 
 const pool = sql.createPool(config);

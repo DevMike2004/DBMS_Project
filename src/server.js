@@ -3,11 +3,11 @@
 //***   /                 -> homepage.html
 //***   /<page>.html      -> that page from src/ (placeholder.html if it isn't built yet)
 //***   /css/...          -> stylesheets
-//***   /api/...          -> API routes (recipe.js; add pantry/shopping routes the same way)
+//***   /api/...          -> API routes (Backend B: recipe.js, Backend A: routes/)
 
 const express = require('express');
-const path = require('path');
 const fsp = require("fs").promises; // Use fs/promises for async/await file operations
+const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,7 +15,6 @@ const PORT = process.env.PORT || 3000;
 // Requires the exported pool object from the local 'mysql.js' file
 // (requiring it here also runs the connection check at startup)
 const pool = require('./mysql');
-const { errorPage } = require('./helper');
 
 //*** create form parser
 // Using express's built-in body parser for simplicity and consistency
@@ -66,14 +65,43 @@ app.get("/:page.html", async (req, res) => {
 });
 
 //*** API ROUTES
-app.use('/api', require('./recipe'));        // Backend B: tags and recipes
-// app.use('/api', require('./pantry'));     // Backend A: add here when ready
+// Backend B: tags and recipes
+app.use('/api', require('./recipe'));
 
-// Unknown API route
-app.use('/api', (req, res) => errorPage(res, 404, "No such API route: " + req.method + " " + req.originalUrl));
+// Backend A: pantry lookups, ingredients, inventory, and shopping.
+app.use('/api', require('./routes/lookups'));
+app.use('/api/ingredients', require('./routes/ingredients'));
+app.use('/api/inventory', require('./routes/inventory'));
+app.use('/api/shopping-list', require('./routes/shopping'));
 
-// Anything else
-app.use((req, res) => res.status(404).send("<html><body><h1>404 Not Found</h1><a href=/>Main Menu</a></body></html>"));
+// Standardized API error response format: { "error": "message" }.
+app.use('/api', (req, res) => {
+    res.status(404).json({ error: 'Route not found' });
+});
+
+// Anything else (pages)
+app.use((req, res) => res.status(404).send("<html><body><h1>404 Not Found</h1><a href=/>Home</a></body></html>"));
+
+app.use((err, req, res, next) => {
+    if (err.type === 'entity.parse.failed') {
+        return res.status(400).json({ error: 'Invalid JSON body' });
+    }
+    if (err.code === 'ER_DUP_ENTRY') {
+        return res.status(409).json({ error: 'A value already exists' });
+    }
+    if (err.code === 'ER_NO_REFERENCED_ROW_2') {
+        return res.status(400).json({ error: 'Referenced record does not exist' });
+    }
+    if (err.code === 'ER_ROW_IS_REFERENCED_2') {
+        return res.status(409).json({ error: 'Cannot delete a referenced record' });
+    }
+    if (err.code === 'ER_CHECK_CONSTRAINT_VIOLATED' || err.code === 'ER_DATA_TOO_LONG') {
+        return res.status(400).json({ error: 'Value violates database constraints' });
+    }
+
+    console.error('API error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+});
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
