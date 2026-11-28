@@ -1,0 +1,438 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Editor</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .filter-form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+            .filter-form label {
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+                font-size: 14px;
+                color: #333;
+                gap: 4px;
+            }
+
+            .filter-form input,
+            .filter-form select,
+            .filter-form textarea {
+                padding: 10px;
+                font-size: 15px;
+                border: 1px solid #999;
+                border-radius: 6px;
+                background-color: #fff;
+            }
+
+                .filter-form input[type="number"] {
+                    width: 110px;
+                }
+
+            .filter-form textarea {
+                width: 300px;
+                height: 80px;
+                resize: vertical;
+            }
+
+        .action-button {
+            padding: 11px 20px;
+            font-size: 16px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+        }
+
+            .action-button:hover {
+                background-color: #555;
+            }
+
+            .action-button.secondary {
+                background-color: #fff;
+                color: #333;
+                border-color: #999;
+            }
+
+                .action-button.secondary:hover {
+                    background-color: #555;
+                    color: #fff;
+                }
+
+            .action-button.delete {
+                background-color: #b00020;
+                border-color: #b00020;
+            }
+
+                .action-button.delete:hover {
+                    background-color: #d32f2f;
+                }
+
+        #results table {
+            width: 800px;
+            max-width: 100%;
+        }
+
+        #results th,
+        #results td {
+            padding: 8px;
+        }
+
+        .message {
+            color: #333;
+        }
+
+        .error {
+            color: #b00020;
+        }
+
+        .editor-section {
+            margin-bottom: 20px;
+        }
+
+            .editor-section h3 {
+                margin-bottom: 8px;
+                color: #333;
+            }
+    </style>
+</head>
+<body class="site-page">
+    <div class="home-bar">
+        <a href="/" class="home-button">Home</a>
+    </div>
+
+    <main class="page-content">
+        <h1>Recipe Editor</h1>
+
+        <form id="filters" class="filter-form" action="/api/recipes/" method="GET">
+            <label>
+                Recipe ID (to edit)
+                <input type="number" name="id" id="recipe-id" min="1" step="1" placeholder="e.g. 1">
+            </label>
+            <button type="submit" class="action-button">Load</button>
+            <button type="button" id="new-recipe" class="action-button secondary">New Recipe</button>
+        </form>
+
+        <div id="results">
+            <p class="message">Enter a recipe ID to edit, or click "New Recipe" to create one.</p>
+        </div>
+    </main>
+
+    <script>
+        async function fetchPage(url) {
+            const res = await fetch(url);
+            const html = await res.text();
+            const doc = new DOMParser().parseFromString(html, "text/html");
+            return { ok: res.ok, doc: doc };
+        }
+
+        // Fill the Tag dropdown from GET /api/tags
+        async function loadTags() {
+            try {
+                const { ok, doc } = await fetchPage("/api/tags");
+                if (!ok) return;
+                const select = document.getElementById("tag-select");
+                if (!select) return;
+                const rows = doc.querySelectorAll("table tr");
+                rows.forEach((row, i) => {
+                    const cells = row.querySelectorAll("td");
+                    if (i === 0 || cells.length < 2) return;
+                    const option = document.createElement("option");
+                    option.value = cells[0].textContent;
+                    option.textContent = cells[1].textContent;
+                    select.appendChild(option);
+                });
+            } catch (err) {
+                console.error("Could not load tags:", err);
+            }
+        }
+
+        // Show recipe fields from GET /api/recipes/:id
+        async function loadRecipe() {
+            const id = document.getElementById("recipe-id").value;
+            const results = document.getElementById("results");
+
+            if (!id) {
+                results.innerHTML = '<p class="error">Please enter a recipe ID.</p>';
+                return;
+            }
+
+            results.innerHTML = '<p class="message">Loading recipe...</p>';
+
+            try {
+                const { ok, doc } = await fetchPage("/api/recipes/" + encodeURIComponent(id));
+                if (!ok) {
+                    const msg = doc.querySelector("main p, p");
+                    results.innerHTML = "";
+                    const p = document.createElement("p");
+                    p.className = "error";
+                    p.textContent = msg ? msg.textContent : "Could not load recipe.";
+                    results.appendChild(p);
+                    return;
+                }
+
+                results.innerHTML = "";
+
+                // Extract the recipe table from the API response
+                const table = doc.querySelector("table");
+                let recipeData = {};
+
+                if (table) {
+                    const rows = table.querySelectorAll("tr");
+                    rows.forEach((row, i) => {
+                        if (i === 0) return; // skip header
+                        const cells = row.querySelectorAll("td");
+                        if (cells.length >= 2) {
+                            const key = cells[0].textContent.toLowerCase().replace(/\s+/g, '_');
+                            const value = cells[1].textContent;
+                            recipeData[key] = value;
+                        }
+                    });
+                }
+
+                // the editor form
+                const form = document.createElement("form");
+                form.id = "editor-form";
+                form.style.display = "flex";
+                form.style.flexDirection = "column";
+                form.style.gap = "12px";
+                form.style.maxWidth = "500px";
+
+                // Title
+                const titleLabel = document.createElement("label");
+                titleLabel.textContent = "Title";
+                titleLabel.style.cssText = "display:flex;flex-direction:column;font-size:14px;color:#333;gap:4px;";
+                const titleInput = document.createElement("input");
+                titleInput.type = "text";
+                titleInput.name = "title";
+                titleInput.value = recipeData.title || "";
+                titleInput.placeholder = "Recipe title";
+                titleLabel.appendChild(titleInput);
+                form.appendChild(titleLabel);
+
+                // Description
+                const descLabel = document.createElement("label");
+                descLabel.textContent = "Description";
+                descLabel.style.cssText = "display:flex;flex-direction:column;font-size:14px;color:#333;gap:4px;";
+                const descInput = document.createElement("textarea");
+                descInput.name = "description";
+                descInput.value = recipeData.description || "";
+                descInput.placeholder = "Brief description";
+                descLabel.appendChild(descInput);
+                form.appendChild(descLabel);
+
+                // Servings
+                const servingsLabel = document.createElement("label");
+                servingsLabel.textContent = "Servings";
+                servingsLabel.style.cssText = "display:flex;flex-direction:column;font-size:14px;color:#333;gap:4px;";
+                const servingsInput = document.createElement("input");
+                servingsInput.type = "number";
+                servingsInput.name = "servings";
+                servingsInput.value = recipeData.servings || "";
+                servingsInput.min = "1";
+                servingsLabel.appendChild(servingsInput);
+                form.appendChild(servingsLabel);
+
+                // Prep time
+                const prepLabel = document.createElement("label");
+                prepLabel.textContent = "Prep Time (minutes)";
+                prepLabel.style.cssText = "display:flex;flex-direction:column;font-size:14px;color:#333;gap:4px;";
+                const prepInput = document.createElement("input");
+                prepInput.type = "number";
+                prepInput.name = "prep_minutes";
+                prepInput.value = recipeData.prep_minutes || "";
+                prepInput.min = "0";
+                prepLabel.appendChild(prepInput);
+                form.appendChild(prepLabel);
+
+                // Cook time
+                const cookLabel = document.createElement("label");
+                cookLabel.textContent = "Cook Time (minutes)";
+                cookLabel.style.cssText = "display:flex;flex-direction:column;font-size:14px;color:#333;gap:4px;";
+                const cookTimeInput = document.createElement("input");
+                cookTimeInput.type = "number";
+                cookTimeInput.name = "cook_minutes";
+                cookTimeInput.value = recipeData.cook_minutes || "";
+                cookTimeInput.min = "0";
+                cookLabel.appendChild(cookTimeInput);
+                form.appendChild(cookLabel);
+
+                // Instructions
+                const instrLabel = document.createElement("label");
+                instrLabel.textContent = "Instructions";
+                instrLabel.style.cssText = "display:flex;flex-direction:column;font-size:14px;color:#333;gap:4px;";
+                const instrInput = document.createElement("textarea");
+                instrInput.name = "instructions";
+                instrInput.value = recipeData.instructions || "";
+                instrInput.placeholder = "Step-by-step instructions";
+                instrLabel.appendChild(instrInput);
+                form.appendChild(instrLabel);
+
+                // Tags (multi-select)
+                const tagSection = document.createElement("div");
+                tagSection.className = "editor-section";
+                const tagHeading = document.createElement("h3");
+                tagHeading.textContent = "Tags";
+                tagSection.appendChild(tagHeading);
+
+                const tagSelect = document.createElement("select");
+                tagSelect.id = "tag-select";
+                tagSelect.multiple = true;
+                tagSelect.size = 5;
+                tagSelect.style.cssText = "padding:10px;font-size:15px;border:1px solid #999;border-radius:6px;background-color:#fff;width:300px;";
+                tagSection.appendChild(tagSelect);
+                form.appendChild(tagSection);
+
+                // Save button
+                const saveBtn = document.createElement("button");
+                saveBtn.type = "submit";
+                saveBtn.textContent = "Save Recipe";
+                saveBtn.className = "action-button";
+                form.appendChild(saveBtn);
+
+                // Delete button only apearing when editing existing recipe
+                if (recipeData.title) {
+                    const deleteBtn = document.createElement("button");
+                    deleteBtn.type = "button";
+                    deleteBtn.textContent = "Delete Recipe";
+                    deleteBtn.className = "action-button delete";
+                    deleteBtn.addEventListener("click", () => deleteRecipe(id));
+                    form.appendChild(deleteBtn);
+                }
+
+                results.appendChild(form);
+
+                // Load tags into the select
+                loadTags();
+
+                // Pre-select tags if they exist in the recipe data
+                if (recipeData.tag) {
+                    const tags = recipeData.tag.split(",").map(t => t.trim());
+                    Array.from(tagSelect.options).forEach(opt => {
+                        if (tags.includes(opt.textContent)) {
+                            opt.selected = true;
+                        }
+                    });
+                }
+
+            } catch (err) {
+                console.error("Could not load recipe:", err);
+                results.innerHTML = '<p class="error">Could not reach the server.</p>';
+            }
+        }
+
+        // Handle form submission (save new or update existing)
+        document.getElementById("editor-form")?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const msg = document.getElementById("editor-message");
+            msg.textContent = "";
+            msg.className = "message";
+
+            const form = e.target;
+            const formData = new FormData(form);
+            const data = {
+                title: formData.get("title"),
+                description: formData.get("description"),
+                servings: formData.get("servings"),
+                prep_minutes: formData.get("prep_minutes"),
+                cook_minutes: formData.get("cook_minutes"),
+                instructions: formData.get("instructions"),
+            };
+
+            // Collect selected tags
+            const tagSelect = document.getElementById("tag-select");
+            if (tagSelect) {
+                data.tag_id = Array.from(tagSelect.selectedOptions).map(opt => opt.value);
+            }
+
+            const id = document.getElementById("recipe-id").value;
+
+            try {
+                let res;
+                if (id) {
+                    // Update existing
+                    res = await fetch("/api/recipes/" + encodeURIComponent(id), {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(data)
+                    });
+                } else {
+                    // Create new
+                    res = await fetch("/api/recipes", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(data)
+                    });
+                }
+
+                const html = await res.text();
+                const doc = new DOMParser().parseFromString(html, "text/html");
+
+                if (!res.ok) {
+                    const errMsg = doc.querySelector("main p, p");
+                    msg.className = "error";
+                    msg.textContent = errMsg ? errMsg.textContent : "Save failed.";
+                    return;
+                }
+
+                msg.className = "message";
+                msg.textContent = "Recipe saved successfully!";
+            } catch (err) {
+                console.error("Save failed:", err);
+                msg.className = "error";
+                msg.textContent = "Could not reach the server.";
+            }
+        });
+
+        // Delete a recipe
+        async function deleteRecipe(id) {
+            if (!confirm("Are you sure you want to delete this recipe?")) return;
+
+            try {
+                const res = await fetch("/api/recipes/" + encodeURIComponent(id), {
+                    method: "DELETE"
+                });
+                const html = await res.text();
+                const doc = new DOMParser().parseFromString(html, "text/html");
+
+                if (!res.ok) {
+                    const errMsg = doc.querySelector("main p, p");
+                    alert(errMsg ? errMsg.textContent : "Delete failed.");
+                    return;
+                }
+
+                alert("Recipe deleted successfully!");
+                document.getElementById("recipe-id").value = "";
+                document.getElementById("results").innerHTML = '<p class="message">Recipe deleted. Enter a new ID or create a new recipe.</p>';
+            } catch (err) {
+                console.error("Delete failed:", err);
+                alert("Could not reach the server.");
+            }
+        }
+
+        // Load recipe when form submitted
+        document.getElementById("filters").addEventListener("submit", e => {
+            e.preventDefault();
+            loadRecipe();
+        });
+
+        // New recipe button clears the ID and shows empty form
+        document.getElementById("new-recipe").addEventListener("click", () => {
+            document.getElementById("recipe-id").value = "";
+            document.getElementById("results").innerHTML = '<p class="message">Enter a title and details below to create a new recipe.</p>';
+            // Re-trigger loadRecipe with empty ID to show blank form
+            setTimeout(() => loadRecipe(), 10);
+        });
+    </script>
+</body>
+</html>

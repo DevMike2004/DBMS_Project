@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Detail</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .filter-form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+            .filter-form label {
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+                font-size: 14px;
+                color: #333;
+                gap: 4px;
+            }
+
+            .filter-form input,
+            .filter-form select {
+                padding: 10px;
+                font-size: 15px;
+                border: 1px solid #999;
+                border-radius: 6px;
+                background-color: #fff;
+            }
+
+                .filter-form input[type="number"] {
+                    width: 110px;
+                }
+
+        .action-button {
+            padding: 11px 20px;
+            font-size: 16px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+        }
+
+            .action-button:hover {
+                background-color: #555;
+            }
+
+            .action-button.secondary {
+                background-color: #fff;
+                color: #333;
+                border-color: #999;
+            }
+
+                .action-button.secondary:hover {
+                    background-color: #555;
+                    color: #fff;
+                }
+
+            .action-button.cook {
+                background-color: #2e7d32;
+                border-color: #2e7d32;
+            }
+
+                .action-button.cook:hover {
+                    background-color: #388e3c;
+                }
+
+        #results table {
+            width: 800px;
+            max-width: 100%;
+        }
+
+        #results th,
+        #results td {
+            padding: 8px;
+        }
+
+        .message {
+            color: #333;
+        }
+
+        .error {
+            color: #b00020;
+        }
+    </style>
+</head>
+<body class="site-page">
+    <div class="home-bar">
+        <a href="/" class="home-button">Home</a>
+    </div>
+
+    <main class="page-content">
+        <h1>Recipe Detail</h1>
+
+        <form id="filters" class="filter-form" action="/api/recipes/" method="GET">
+            <label>
+                Recipe ID
+                <input type="number" name="id" id="recipe-id" min="1" step="1" placeholder="e.g. 1">
+            </label>
+            <button type="submit" class="action-button">Load</button>
+        </form>
+
+        <div id="results"><p class="message">Enter a recipe ID to view details.</p></div>
+    </main>
+
+    <script>
+        async function fetchPage(url) {
+            const res = await fetch(url);
+            const html = await res.text();
+            const doc = new DOMParser().parseFromString(html, "text/html");
+            return { ok: res.ok, doc: doc };
+        }
+
+        async function loadRecipe() {
+            const id = document.getElementById("recipe-id").value;
+            const results = document.getElementById("results");
+
+            if (!id) {
+                results.innerHTML = '<p class="error">Please enter a recipe ID.</p>';
+                return;
+            }
+
+            results.innerHTML = '<p class="message">Loading recipe...</p>';
+
+            try {
+                const { ok, doc } = await fetchPage("/api/recipes/" + encodeURIComponent(id));
+                if (!ok) {
+                    const msg = doc.querySelector("main p, p");
+                    results.innerHTML = "";
+                    const p = document.createElement("p");
+                    p.className = "error";
+                    p.textContent = msg ? msg.textContent : "Could not load recipe.";
+                    results.appendChild(p);
+                    return;
+                }
+
+                results.innerHTML = "";
+
+                // Extract the recipe table from the API response
+                const table = doc.querySelector("table");
+                if (table) {
+                    results.appendChild(table);
+                } else {
+                    // Fallback: show the parsed content
+                    const main = doc.querySelector("main");
+                    if (main) {
+                        results.appendChild(main.cloneNode(true));
+                    } else {
+                        results.innerHTML = '<p class="error">No recipe data found.</p>';
+                    }
+                }
+
+                // Cook button
+                const cookBtn = document.createElement("button");
+                cookBtn.textContent = "Cook";
+                cookBtn.className = "action-button cook";
+                cookBtn.addEventListener("click", () => cookRecipe(id));
+                results.appendChild(document.createElement("br"));
+                results.appendChild(cookBtn);
+
+            } catch (err) {
+                console.error("Could not load recipe:", err);
+                results.innerHTML = '<p class="error">Could not reach the server.</p>';
+            }
+        }
+
+        async function cookRecipe(id) {
+            const msg = document.getElementById("cook-message");
+            msg.textContent = "";
+            msg.className = "message";
+
+            try {
+                const res = await fetch("/api/recipes/" + encodeURIComponent(id) + "/cook", {
+                    method: "POST"
+                });
+                const html = await res.text();
+                const doc = new DOMParser().parseFromString(html, "text/html");
+
+                if (!res.ok) {
+                    const errMsg = doc.querySelector("main p, p");
+                    msg.className = "error";
+                    msg.textContent = errMsg ? errMsg.textContent : "Cooking failed.";
+                    return;
+                }
+
+                msg.className = "message";
+                msg.textContent = "Recipe cooked successfully!";
+            } catch (err) {
+                console.error("Cook failed:", err);
+                msg.className = "error";
+                msg.textContent = "Cook endpoint not yet available.";
+            }
+        }
+
+        document.getElementById("filters").addEventListener("submit", e => {
+            e.preventDefault();
+            loadRecipe();
+        });
+    </script>
+</body>
+</html>
